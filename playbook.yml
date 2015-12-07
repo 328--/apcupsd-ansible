@@ -1,0 +1,16 @@
+---
+- hosts: all
+  user: root
+  sudo: yes
+  tasks:
+    - name: install repo
+      yum: name=epel-release state=installed
+
+    - name: install apcupsd
+      yum: name=apcupsd state=installed
+
+    - name: apcupsd settings
+      copy: src=apcupsd.conf dest=/etc/apcupsd/apcupsd.conf owner=root group=root mode=644
+
+    - name: apcupsd started and enabled
+      service: name=apcupsd state=started enabled=yes
